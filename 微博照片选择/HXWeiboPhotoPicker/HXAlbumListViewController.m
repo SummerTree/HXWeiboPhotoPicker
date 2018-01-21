@@ -56,10 +56,7 @@
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    if (self.orientationDidChange) {
-        [self changeSubviewFrame];
-        self.orientationDidChange = NO;
-    }
+    [self changeSubviewFrame];
 }
 
 - (void)deviceOrientationChanged:(NSNotification *)notify {
@@ -87,6 +84,7 @@
     }
     CGFloat leftMargin = 0;
     CGFloat rightMargin = 0;
+    CGFloat bottomMargin = self.tabBarController.tabBar.hx_h;
     CGFloat width = self.view.hx_w;
     if (kDevice_Is_iPhoneX && (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight)) {
         leftMargin = 35;
@@ -94,8 +92,8 @@
         width = self.view.hx_w - 70;
     }
     if (self.manager.configuration.singleSelected) {
-        self.tableView.contentInset = UIEdgeInsetsMake(navBarHeight, leftMargin, 0, rightMargin);
-        self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(navBarHeight, leftMargin, 0, rightMargin);
+        self.tableView.contentInset = UIEdgeInsetsMake(navBarHeight, leftMargin, bottomMargin, rightMargin);
+        self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(navBarHeight, leftMargin, bottomMargin, rightMargin);
         if (self.manager.configuration.albumListTableView) {
             self.manager.configuration.albumListTableView(self.tableView);
         }
@@ -104,8 +102,8 @@
         CGFloat itemHeight = itemWidth + 6 + 14 + 4 + 14;
         self.flowLayout.itemSize = CGSizeMake(itemWidth, itemHeight);
         
-        self.collectionView.contentInset = UIEdgeInsetsMake(navBarHeight, leftMargin, 0, rightMargin);
-        self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(navBarHeight, leftMargin, 0, rightMargin);
+        self.collectionView.contentInset = UIEdgeInsetsMake(navBarHeight, leftMargin, bottomMargin, rightMargin);
+        self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(navBarHeight, leftMargin, bottomMargin, rightMargin);
         if (self.orientationDidChange) {
             [self.collectionView scrollToItemAtIndexPath:self.beforeOrientationIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
         }
@@ -183,13 +181,13 @@
 - (void)getAlbumModelList:(BOOL)isFirst {
     if (self.manager.albums.count > 0 && self.manager.configuration.saveSystemAblum && !self.manager.configuration.singleSelected) {
         self.albumModelArray = [NSMutableArray arrayWithArray:self.manager.albums];
-        HXAlbumModel *model = self.albumModelArray.firstObject;
-        HXDatePhotoViewController *vc = [[HXDatePhotoViewController alloc] init];
-        vc.manager = self.manager;
-        vc.title = model.albumName;
-        vc.albumModel = model;
-        vc.delegate = self;
-        [self.navigationController pushViewController:vc animated:NO];
+        //HXAlbumModel *model = self.albumModelArray.firstObject;
+        //HXDatePhotoViewController *vc = [[HXDatePhotoViewController alloc] init];
+        //vc.manager = self.manager;
+        //vc.title = model.albumName;
+        //vc.albumModel = model;
+        //vc.delegate = self;
+        //[self.navigationController pushViewController:vc animated:NO];
         if (self.manager.configuration.singleSelected) {
             [self.tableView reloadData];
         }else {
@@ -204,13 +202,13 @@
         __weak typeof(self) weakSelf = self;
         [self.manager getAllPhotoAlbums:^(HXAlbumModel *firstAlbumModel) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                HXAlbumModel *model = firstAlbumModel;
-                HXDatePhotoViewController *vc = [[HXDatePhotoViewController alloc] init];
-                vc.manager = weakSelf.manager;
-                vc.title = model.albumName;
-                vc.albumModel = model;
-                vc.delegate = weakSelf;
-                [weakSelf.navigationController pushViewController:vc animated:NO];
+//                HXAlbumModel *model = firstAlbumModel;
+//                HXDatePhotoViewController *vc = [[HXDatePhotoViewController alloc] init];
+//                vc.manager = weakSelf.manager;
+//                vc.title = model.albumName;
+//                vc.albumModel = model;
+//                vc.delegate = weakSelf;
+//                [weakSelf.navigationController pushViewController:vc animated:NO];
                 if (weakSelf.manager.configuration.saveSystemAblum && !weakSelf.manager.configuration.singleSelected) {
                     if (weakSelf.albumModelArray.count == 0) {
                         [weakSelf getAlbumModelList:NO];

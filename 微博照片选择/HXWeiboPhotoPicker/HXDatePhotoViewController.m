@@ -61,10 +61,7 @@
 }
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    if (self.orientationDidChange) {
-        [self changeSubviewFrame];
-        self.orientationDidChange = NO;
-    }
+    [self changeSubviewFrame];
 }
 - (void)deviceOrientationChanged:(NSNotification *)notify {
     self.beforeOrientationIndexPath = [self.collectionView indexPathsForVisibleItems].firstObject;
