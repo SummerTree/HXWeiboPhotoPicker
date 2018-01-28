@@ -265,9 +265,9 @@
 #pragma mark - < UITableViewDelegate >
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (self.navigationController.topViewController != self) {
-        return;
-    }
+//    if (self.navigationController.topViewController != self) {
+//        return;
+//    }
     HXAlbumModel *model = self.albumModelArray[indexPath.row];
     HXDatePhotoViewController *vc = [[HXDatePhotoViewController alloc] init];
     vc.manager = self.manager;
